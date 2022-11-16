@@ -26,6 +26,9 @@ const mainContainerEl = document.querySelector(".col-10");
 
 let position = 0;
 
+
+
+
 function createTemplate(mainContainerEl) {
     const mainImageEl = document.createElement("img");
     const thumbContainer = document.createElement("div");
@@ -45,16 +48,27 @@ function createTemplate(mainContainerEl) {
     mainImageEl.src = images[position].image;
     title.textContent = images[position].title;
     text.textContent = images[position].text;
-    btnPrev.addEventListener("click", () => {
-        if (position <= 0) {
-            position = 5;
+    setInterval(function () {
+        mainImageEl.src = images[position].image;
+        title.textContent = images[position].title;
+        text.textContent = images[position].text;
+        position++;
+        if (position >= 5) {
+            position = 0;
         }
+    }, 3000)
+
+
+
+    btnPrev.addEventListener("click", () => {
+
         position--;
         mainImageEl.src = images[position].image;
         title.textContent = images[position].title;
         text.textContent = images[position].text;
     })
     btnNext.addEventListener("click", () => {
+
         position++;
         if (position >= 5) {
             position = 0;
@@ -90,3 +104,4 @@ function imageFillThumb(thumbContainer) {
         thumbContainer.append(thumbImage)
     }
 }
+
