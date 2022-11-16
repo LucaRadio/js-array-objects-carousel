@@ -26,6 +26,8 @@ const mainContainerEl = document.querySelector(".col-10");
 
 let position = 0;
 
+const interval = setInterval(intervalStart, 3000)
+
 
 
 
@@ -37,6 +39,7 @@ function createTemplate(mainContainerEl) {
     const myContainer = document.createElement("div");
     const title = document.createElement("h4");
     const text = document.createElement("p");
+    const btnCarousel = document.querySelector(".carousel-btn");
 
 
 
@@ -48,15 +51,20 @@ function createTemplate(mainContainerEl) {
     mainImageEl.src = images[position].image;
     title.textContent = images[position].title;
     text.textContent = images[position].text;
-    setInterval(function () {
-        mainImageEl.src = images[position].image;
-        title.textContent = images[position].title;
-        text.textContent = images[position].text;
-        position++;
-        if (position >= 5) {
-            position = 0;
+
+    btnCarousel.addEventListener("click", () => {
+        btnCarousel.classList.toggle("active")
+        if (btnCarousel.classList.contains("active")) {
+            intervalStart(mainImageEl, title, text);
+        } else {
+            clearInterval(interval);
         }
-    }, 3000)
+
+
+    })
+
+
+
 
 
 
@@ -104,4 +112,19 @@ function imageFillThumb(thumbContainer) {
         thumbContainer.append(thumbImage)
     }
 }
+
+function intervalStart(mainImageEl, title, text) {
+    mainImageEl.src = images[position].image;
+    title.textContent = images[position].title;
+    text.textContent = images[position].text;
+    position++;
+    if (position >= 5) {
+        position = 0;
+    }
+}
+
+function intervalStop() {
+
+}
+
 
