@@ -39,7 +39,7 @@ function createTemplate(mainContainerEl) {
     const myContainer = document.createElement("div");
     const title = document.createElement("h4");
     const text = document.createElement("p");
-    // const btnCarousel = document.querySelector(".carousel-btn");
+    const btnCarousel = document.querySelector(".carousel-btn");
 
 
 
@@ -52,15 +52,22 @@ function createTemplate(mainContainerEl) {
     title.textContent = images[position].title;
     text.textContent = images[position].text;
 
-    // btnCarousel.addEventListener("click", () => {
-    //     btnCarousel.classList.toggle("active")
-    //     if (btnCarousel.classList.contains("active")) {
-    //         intervalStart(mainImageEl, title, text);
-    //     }
-    //     if (btnCarousel.classList.contains("active")) {
-    //         clearInterval(interval);
-    //     }
-    // })
+    btnCarousel.addEventListener("click", () => {
+        btnCarousel.classList.toggle("active")
+        if (btnCarousel.classList.contains("active")) {
+            setInterval(function () {
+                mainImageEl.src = images[position].image;
+                title.textContent = images[position].title;
+                text.textContent = images[position].text;
+                position++;
+                if (position >= 5) {
+                    position = 0;
+                }
+            }, 3000);
+
+        }
+
+    })
 
 
 
@@ -88,7 +95,7 @@ function createTemplate(mainContainerEl) {
     })
 
 
-    // Infilare le immagini 
+
 
 
 
@@ -114,18 +121,6 @@ function imageFillThumb(thumbContainer) {
     }
 }
 
-// function intervalStart(mainImageEl, title, text) {
-//     mainImageEl.src = images[position].image;
-//     title.textContent = images[position].title;
-//     text.textContent = images[position].text;
-//     position++;
-//     if (position >= 5) {
-//         position = 0;
-//     }
-// }
 
-// function intervalStop() {
-//     clearInterval(interval)
-// }
 
 
