@@ -23,94 +23,90 @@ const images = [
 ];
 
 const mainContainerEl = document.querySelector(".col-10");
-
 let position = 0;
+let interval;
+let child = position + 1;
 
-// const interval = setInterval(intervalStart, 1000)
-
-
-
-
-function createTemplate(mainContainerEl) {
-    const mainImageEl = document.createElement("img");
-    const thumbContainer = document.createElement("div");
-    const btnPrev = document.createElement("button");
-    const btnNext = document.createElement("button");
-    const myContainer = document.createElement("div");
-    const title = document.createElement("h4");
-    const text = document.createElement("p");
-    const btnCarousel = document.querySelector(".carousel-btn");
+const mainImageEl = document.createElement("img");
+const thumbContainer = document.createElement("div");
+const btnPrev = document.createElement("button");
+const btnNext = document.createElement("button");
+const myContainer = document.createElement("div");
+const title = document.createElement("h4");
+const text = document.createElement("p");
+const btnCarousel = document.querySelector(".carousel-btn");
 
 
 
 
-    btnPrev.classList.add("btn-light", "rounded-5", "btn-prev");
-    btnNext.classList.add("btn-light", "rounded-5", "btn-next");
-    btnPrev.innerHTML = "&#8963;"
-    btnNext.innerHTML = "&#8964;"
+
+
+btnPrev.classList.add("btn-light", "rounded-5", "btn-prev");
+btnNext.classList.add("btn-light", "rounded-5", "btn-next");
+btnPrev.innerHTML = "&#8963;"
+btnNext.innerHTML = "&#8964;"
+mainImageEl.src = images[position].image;
+title.textContent = images[position].title;
+text.textContent = images[position].text;
+
+btnCarousel.addEventListener("click", () => {
+    btnCarousel.classList.toggle("active")
+    if (btnCarousel.classList.contains("active")) {
+
+        interval = setInterval(function () {
+
+            changeImage(true);
+
+        }, 2000);
+
+    } else {
+
+        clearInterval(interval);
+    }
+})
+
+
+
+function changeImage(isIncrementa) {
+
+    if (isIncrementa) {
+        position++;
+        if (position >= images.length) {
+            position = 0;
+        }
+    } else {
+        position--;
+        if (position < 0) {
+            position = images.length;
+        }
+    }
     mainImageEl.src = images[position].image;
     title.textContent = images[position].title;
     text.textContent = images[position].text;
+    imgActive();
 
-    btnCarousel.addEventListener("click", () => {
-        btnCarousel.classList.toggle("active")
-        if (btnCarousel.classList.contains("active")) {
-            setInterval(function () {
-                mainImageEl.src = images[position].image;
-                title.textContent = images[position].title;
-                text.textContent = images[position].text;
-                position++;
-                if (position >= 5) {
-                    position = 0;
-                }
-            }, 3000);
-
-        }
-
-    })
-
-
-
-
-
-
-
-
-    btnPrev.addEventListener("click", () => {
-
-        position--;
-        mainImageEl.src = images[position].image;
-        title.textContent = images[position].title;
-        text.textContent = images[position].text;
-    })
-    btnNext.addEventListener("click", () => {
-
-        position++;
-        if (position >= 5) {
-            position = 0;
-        }
-        mainImageEl.src = images[position].image;
-        title.textContent = images[position].title;
-        text.textContent = images[position].text;
-    })
-
-
-
-
-
-
-    imageFillThumb(thumbContainer);
-    title.classList.add("title")
-    text.classList.add("title")
-    myContainer.classList.add("d-flex", "my-container");
-    thumbContainer.classList.add("thumb-container");
-    mainImageEl.classList.add("main-img");
-    myContainer.append(title, text)
-    thumbContainer.append(btnPrev, btnNext);
-    mainContainerEl.append(mainImageEl, myContainer, thumbContainer)
 }
+imageFillThumb(thumbContainer);
+title.classList.add("title")
+text.classList.add("title")
+myContainer.classList.add("d-flex", "my-container");
+thumbContainer.classList.add("thumb-container");
+mainImageEl.classList.add("main-img");
+myContainer.append(title, text)
+thumbContainer.append(btnPrev, btnNext);
+mainContainerEl.append(mainImageEl, myContainer, thumbContainer)
 
-createTemplate(mainContainerEl);
+imgActive();
+btnPrev.addEventListener("click", () => {
+    changeImage(false);
+    imgActive();
+
+})
+btnNext.addEventListener("click", () => {
+    changeImage(true);
+
+    imgActive();
+});
 
 function imageFillThumb(thumbContainer) {
     for (let object in images) {
@@ -121,6 +117,16 @@ function imageFillThumb(thumbContainer) {
     }
 }
 
+function intervalStop() {
+    clearInterval(interval)
+}
 
 
-
+function imgActive() {
+    const oldActive = document.querySelectorAll(".thumb-container > img");
+    oldActive.forEach(element => {
+        element.classList.remove("active");
+    });
+    const active = document.querySelector(`.thumb-container :nth-child(${position + 1})`);
+    active.classList.add("active");
+}

@@ -28,6 +28,12 @@
 .img-thumb {
     height: calc(100% / 5);
     object-fit: cover;
+    opacity: 0.5;
+}
+
+
+.active {
+    opacity: 1;
 }
 
 .btn-prev {
