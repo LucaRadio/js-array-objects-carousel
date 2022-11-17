@@ -35,6 +35,7 @@ const myContainer = document.createElement("div");
 const title = document.createElement("h4");
 const text = document.createElement("p");
 const btnCarousel = document.querySelector(".carousel-btn");
+const invert = document.querySelector(".invert");
 
 
 
@@ -56,6 +57,22 @@ btnCarousel.addEventListener("click", () => {
         interval = setInterval(function () {
 
             changeImage(true);
+
+        }, 2000);
+
+    } else {
+
+        clearInterval(interval);
+    }
+})
+
+invert.addEventListener("click", () => {
+    invert.classList.toggle("active")
+    if (invert.classList.contains("active")) {
+
+        interval = setInterval(function () {
+
+            changeImage(false);
 
         }, 2000);
 
