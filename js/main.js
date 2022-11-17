@@ -116,13 +116,12 @@ mainContainerEl.append(mainImageEl, myContainer, thumbContainer)
 imgActive();
 btnPrev.addEventListener("click", () => {
     changeImage(false);
-    imgActive();
+
 
 })
 btnNext.addEventListener("click", () => {
     changeImage(true);
 
-    imgActive();
 });
 
 function imageFillThumb(thumbContainer) {
